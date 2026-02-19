@@ -17,13 +17,23 @@ class MainActivity : AppCompatActivity() {
 
         rcvSach = findViewById(R.id.rcvDanhSach)
 
+        mangSach.add(Sach("Ông già và biển cả", "Ernest Hemingway", R.drawable.sach1,
+            "Câu chuyện kể về cuộc chiến đấu không cân sức giữa ông già Santiago và con cá kiếm khổng lồ..."))
 
-        mangSach.add(Sach("Ông già và biển cả", "Ernest Hemingway", R.drawable.sach1))
-        mangSach.add(Sach("Dế mèn phiêu lưu ký", "Tô Hoài", R.drawable.sach2))
-        mangSach.add(Sach("Yêu trên từng ngón tay", "Trần Trà My", R.drawable.sach3))
-        mangSach.add(Sach(ten = "Sóc sợ sệt", tg = "Milano Walt", hinh = R.drawable.sach4))
-        mangSach.add(Sach(ten = "Nơi nào có mẹ là nhà", tg = "Hạ Mer", hinh = R.drawable.sach5))
-        mangSach.add(Sach("Tắt đèn", "Ngô Tất Tố", R.drawable.sach6))
+        mangSach.add(Sach("Dế mèn phiêu lưu ký", "Tô Hoài", R.drawable.sach2,
+            "Tác phẩm kể về cuộc phiêu lưu của chú Dế Mèn qua nhiều vùng đất, học được nhiều bài học đường đời..."))
+
+        mangSach.add(Sach("Yêu trên từng ngón tay", "Trần Trà My", R.drawable.sach3,
+            "Những câu chuyện nhẹ nhàng về tình yêu, cuộc sống của một cô gái trẻ đầy nghị lực..."))
+
+        mangSach.add(Sach("Sóc sợ sệt", "Milano Walt", R.drawable.sach4,
+            "Chú sóc nhỏ luôn lo lắng về mọi thứ xung quanh, nhưng rồi cậu học được cách dũng cảm đối mặt..."))
+
+        mangSach.add(Sach("Nơi nào có mẹ là nhà", "Hạ Mer", R.drawable.sach5,
+            "Tuyển tập tản văn xúc động về tình mẫu tử, về những bữa cơm nhà và sự bình yên bên mẹ..."))
+
+        mangSach.add(Sach("Tắt đèn", "Ngô Tất Tố", R.drawable.sach6,
+            "Bức tranh hiện thực về cuộc sống khốn cùng của người nông dân Việt Nam dưới chế độ thực dân phong kiến..."))
 
         adapterSach = SachAdapter(mangSach)
         rcvSach.adapter = adapterSach

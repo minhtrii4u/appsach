@@ -1,5 +1,6 @@
 package com.example.appdocsach
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,11 +21,27 @@ class SachAdapter(var dsSach: ArrayList<Sach>) : RecyclerView.Adapter<SachAdapte
 
         val sachHienTai = dsSach[position]
 
-        // Gán chữ và ảnh
+
         holder.txtTen.text = sachHienTai.tenSach
         holder.txtTacGia.text = sachHienTai.tacGia
         holder.imgHinh.setImageResource(sachHienTai.hinhAnh)
+
+        holder.itemView.setOnClickListener {
+            val context = holder.itemView.context
+
+
+            val intent = Intent(context, ChiTietActivity::class.java)
+
+            intent.putExtra("gui_ten", sachHienTai.tenSach)
+            intent.putExtra("gui_tacgia", sachHienTai.tacGia)
+            intent.putExtra("gui_hinh", sachHienTai.hinhAnh)
+            intent.putExtra("gui_tomtat", sachHienTai.tomTat)
+
+
+            context.startActivity(intent)
+        }
     }
+
     override fun getItemCount(): Int {
         return dsSach.size
     }

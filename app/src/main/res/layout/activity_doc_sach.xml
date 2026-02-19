@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFF9C4"
+    android:padding="20dp">
+    <TextView
+        android:id="@+id/tvBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="← Quay lại"
+        android:textSize="18sp"
+        android:textColor="#5D4037"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:id="@+id/tvTieuDe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tên Truyện"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#3E2723"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvNoiDung"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nội dung truyện"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:lineSpacingExtra="8dp"/>
+    </ScrollView>
+
+</LinearLayout>
