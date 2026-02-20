@@ -3,27 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFF9C4"
+    android:background="#FAEEDA"
     android:padding="20dp">
+
     <TextView
         android:id="@+id/tvBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:text="← Quay lại"
-        android:textSize="18sp"
-        android:textColor="#5D4037"
-        android:layout_marginBottom="20dp"/>
+        android:textColor="#623E1E"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tvTieuDe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tên Truyện"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="#3E2723"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:layout_marginBottom="20dp"/>
+        android:text="Tên Truyện"
+        android:textColor="#623E1E"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <ScrollView
         android:layout_width="match_parent"

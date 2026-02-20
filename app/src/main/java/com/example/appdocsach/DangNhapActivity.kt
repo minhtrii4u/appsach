@@ -42,11 +42,10 @@ class DangNhapActivity : AppCompatActivity() {
                 val passLuu = boNho.getString("saved_pass", "")
 
                 if ((emailNhap == emailLuu && passNhap == passLuu) ||
-                    (emailNhap == "MinhTri@gmail.com" && passNhap == "25082006")) {
 
+                    (emailNhap == "MinhTri@gmail.com" && passNhap == "25082006") ||
+                    (emailNhap == "huy@gmail.com" && passNhap == "08112006")) {
                     Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
-
-
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()
