@@ -1,6 +1,7 @@
 package com.example.appdocsach
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val tvXinChao: TextView = findViewById(R.id.tvXinChao)
+        val tenUser = intent.getStringExtra("gui_ten_user")
+
+        if (tenUser != null && tenUser.isNotEmpty()) {
+            tvXinChao.text = "Xin chào, $tenUser "
+        }
 
         rcvSach = findViewById(R.id.rcvDanhSach)
 

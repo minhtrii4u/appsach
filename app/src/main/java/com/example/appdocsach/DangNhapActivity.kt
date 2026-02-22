@@ -24,11 +24,11 @@ class DangNhapActivity : AppCompatActivity() {
         edtPass = findViewById(R.id.edtPassDN)
         btnLogin = findViewById(R.id.btnDangNhap)
         tvChuyenDK = findViewById(R.id.tvChuyenDangKy)
+
         tvChuyenDK.setOnClickListener {
             val i = Intent(this, DangKyActivity::class.java)
             startActivity(i)
         }
-
 
         btnLogin.setOnClickListener {
             val emailNhap = edtEmail.text.toString().trim()
@@ -42,11 +42,17 @@ class DangNhapActivity : AppCompatActivity() {
                 val passLuu = boNho.getString("saved_pass", "")
 
                 if ((emailNhap == emailLuu && passNhap == passLuu) ||
-
                     (emailNhap == "MinhTri@gmail.com" && passNhap == "25082006") ||
                     (emailNhap == "huy@gmail.com" && passNhap == "08112006")) {
+
                     Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
+
                     val intent = Intent(this, MainActivity::class.java)
+
+                    val tenNguoiDung = emailNhap.substringBefore("@")
+
+                    intent.putExtra("gui_ten_user", tenNguoiDung)
+
                     startActivity(intent)
                     finish()
                 } else {

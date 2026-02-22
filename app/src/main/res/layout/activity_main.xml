@@ -17,6 +17,20 @@
         android:textSize="22sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/tvXinChao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Xin chào, Khách!"
+        android:textColor="#4E342E"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingTop="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:gravity="center_horizontal"
+        android:alpha="0.8"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvDanhSach"
         android:layout_width="match_parent"
