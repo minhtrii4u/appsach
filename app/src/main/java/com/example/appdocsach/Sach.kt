@@ -7,11 +7,13 @@ class Sach : Serializable {
     var tacGia: String = ""
     var hinhAnh: Int = 0
     var tomTat: String = ""
+    var theLoai: String = ""
 
-    constructor(ten: String, tg: String, hinh: Int, tt: String) {
+    constructor(ten: String, tg: String, hinh: Int, tt: String, tl: String) {
         this.tenSach = ten
         this.tacGia = tg
         this.hinhAnh = hinh
         this.tomTat = tt
+        this.theLoai = tl
     }
 }
