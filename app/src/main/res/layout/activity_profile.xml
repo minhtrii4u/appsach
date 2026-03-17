@@ -181,7 +181,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_library"
-                        android:tint="#B89B6B" />
+                        app:tint="#B89B6B" />
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -200,7 +200,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_chevron_right"
-                        android:tint="#B89B6B" />
+                        app:tint="#B89B6B" />
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
@@ -216,7 +216,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@android:drawable/ic_menu_day"
-                        android:tint="#B89B6B" />
+                        app:tint="#B89B6B" />
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -235,7 +235,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_chevron_right"
-                        android:tint="#B89B6B" />
+                        app:tint="#B89B6B" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

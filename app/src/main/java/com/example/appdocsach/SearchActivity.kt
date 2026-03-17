@@ -59,7 +59,9 @@ class SearchActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_profile -> {
-                    // TODO: Chuyển sang activity hồ sơ
+                  val intent = Intent(this, ProfileActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
                     true
                 }
                 else -> false
@@ -82,4 +84,3 @@ class SearchActivity : AppCompatActivity() {
         adapterSach.notifyDataSetChanged()
     }
 }
-
