@@ -122,6 +122,10 @@ class MainActivity : AppCompatActivity() {
         // Select "Tất cả" by default
         selectCategory(btnTatCa, "Tất cả")
 
+        // Initialize Firebase and add sample data if needed
+        val firebaseHelper = FirebaseHelper()
+        firebaseHelper.addSampleData()
+
         val bottomNavigationView = findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView.selectedItemId = R.id.nav_home
         bottomNavigationView.setOnItemSelectedListener { item ->
@@ -130,6 +134,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_search -> {
                     val intent = Intent(this, SearchActivity::class.java)
                     intent.putExtra("mangSachFull", mangSachFull)
+                    intent.putExtra("gui_ten_user", tenUser)
                     startActivity(intent)
                     true
                 }
@@ -139,6 +144,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_profile -> {
                     val intent = Intent(this, ProfileActivity::class.java)
+                    intent.putExtra("gui_ten_user", tenUser)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
                     true

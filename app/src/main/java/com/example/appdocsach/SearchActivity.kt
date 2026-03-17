@@ -26,6 +26,7 @@ class SearchActivity : AppCompatActivity() {
 
         // Nhận danh sách sách từ MainActivity (hoặc load lại từ nguồn dữ liệu)
         mangSachFull = intent.getSerializableExtra("mangSachFull") as? ArrayList<Sach> ?: ArrayList()
+        val tenUser = intent.getStringExtra("gui_ten_user")
         mangSach.addAll(mangSachFull)
 
         adapterSach = SachAdapter(mangSach)
@@ -49,6 +50,7 @@ class SearchActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_home -> {
                     val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("gui_ten_user", tenUser)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
                     true
@@ -60,6 +62,7 @@ class SearchActivity : AppCompatActivity() {
                 }
                 R.id.nav_profile -> {
                   val intent = Intent(this, ProfileActivity::class.java)
+                    intent.putExtra("gui_ten_user", tenUser)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
                     true

@@ -2,8 +2,10 @@ package com.example.appdocsach
 
 import android.content.Context
 import android.os.Bundle
+import android.text.InputType
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +17,10 @@ class DangKyActivity : AppCompatActivity() {
     lateinit var edtPass2: EditText
     lateinit var btnDK: Button
     lateinit var tvBack: TextView
+    lateinit var btnTogglePassword: ImageButton
+    lateinit var btnToggleConfirmPassword: ImageButton
+    private var isPasswordVisible = false
+    private var isConfirmPasswordVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +31,34 @@ class DangKyActivity : AppCompatActivity() {
         edtPass2 = findViewById(R.id.edtRePassDK)
         btnDK = findViewById(R.id.btnXacNhanDK)
         tvBack = findViewById(R.id.tvDaCoTK)
+        btnTogglePassword = findViewById(R.id.btnTogglePasswordDK)
+        btnToggleConfirmPassword = findViewById(R.id.btnToggleConfirmPasswordDK)
+
+        // Handle password visibility toggle for password field
+        btnTogglePassword.setOnClickListener {
+            isPasswordVisible = !isPasswordVisible
+            if (isPasswordVisible) {
+                edtPass.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                btnTogglePassword.setImageResource(R.drawable.ic_eye_show)
+            } else {
+                edtPass.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                btnTogglePassword.setImageResource(R.drawable.ic_eye_hide)
+            }
+            edtPass.setSelection(edtPass.text.length)
+        }
+
+        // Handle password visibility toggle for confirm password field
+        btnToggleConfirmPassword.setOnClickListener {
+            isConfirmPasswordVisible = !isConfirmPasswordVisible
+            if (isConfirmPasswordVisible) {
+                edtPass2.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                btnToggleConfirmPassword.setImageResource(R.drawable.ic_eye_show)
+            } else {
+                edtPass2.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                btnToggleConfirmPassword.setImageResource(R.drawable.ic_eye_hide)
+            }
+            edtPass2.setSelection(edtPass2.text.length)
+        }
 
         tvBack.setOnClickListener {
             finish()

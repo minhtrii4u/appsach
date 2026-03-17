@@ -3,8 +3,10 @@ package com.example.appdocsach
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +17,8 @@ class DangNhapActivity : AppCompatActivity() {
     lateinit var edtPass: EditText
     lateinit var btnLogin: Button
     lateinit var tvChuyenDK: TextView
+    lateinit var btnTogglePassword: ImageButton
+    private var isPasswordVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +28,23 @@ class DangNhapActivity : AppCompatActivity() {
         edtPass = findViewById(R.id.edtPassDN)
         btnLogin = findViewById(R.id.btnDangNhap)
         tvChuyenDK = findViewById(R.id.tvChuyenDangKy)
+        btnTogglePassword = findViewById(R.id.btnTogglePasswordDN)
+
+        // Handle password visibility toggle
+        btnTogglePassword.setOnClickListener {
+            isPasswordVisible = !isPasswordVisible
+            if (isPasswordVisible) {
+                // Show password
+                edtPass.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                btnTogglePassword.setImageResource(R.drawable.ic_eye_show)
+            } else {
+                // Hide password
+                edtPass.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                btnTogglePassword.setImageResource(R.drawable.ic_eye_hide)
+            }
+            // Move cursor to end
+            edtPass.setSelection(edtPass.text.length)
+        }
 
         tvChuyenDK.setOnClickListener {
             val i = Intent(this, DangKyActivity::class.java)
