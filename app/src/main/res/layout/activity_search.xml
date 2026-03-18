@@ -4,48 +4,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FAEEDA">
+    android:background="#FAEEDA"> <!-- Đã đổi màu nền sang #FAEEDA -->
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_margin="12dp"
-        android:background="@drawable/bg_search_border">
+        android:layout_margin="16dp"
+        android:padding="20dp"
+        android:background="@drawable/bg_search_border"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <!-- Search Bar -->
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="50dp"
+            android:background="@drawable/bg_search_input"
+            app:iconifiedByDefault="false"
+            app:queryHint="Search items..."
+            app:searchIcon="@drawable/ic_search"
+            app:queryBackground="@android:color/transparent"
+            android:layout_marginBottom="24dp" />
 
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/searchView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:queryHint="Tìm kiếm sách..."
-                android:iconifiedByDefault="false"
-                android:background="@android:color/white"
-                android:layout_margin="12dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RECENT SEARCHES"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="#A0A0A0"
+            android:letterSpacing="0.1"
+            android:layout_marginBottom="12dp"
+            android:layout_marginStart="8dp"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcvSearchResult"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:padding="8dp"
-                android:clipToPadding="false"/>
-        </LinearLayout>
-    </FrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvSearchResult"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbars="none"/>
+
+    </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_height="64dp"
         android:background="@android:color/white"
+        app:elevation="8dp"
         app:menu="@menu/bottom_nav_menu"
-        app:itemIconTint="@color/bottom_nav_icon_color_selector"
-        app:itemTextColor="@color/bottom_nav_text_color_selector"
         app:labelVisibilityMode="unlabeled" />
 
 </LinearLayout>

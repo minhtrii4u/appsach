@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.appcompat.widget.SearchView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import android.content.Intent
+import android.text.InputType
+import android.widget.EditText
 
 class SearchActivity : AppCompatActivity() {
     private lateinit var searchView: SearchView
@@ -23,6 +25,10 @@ class SearchActivity : AppCompatActivity() {
         searchView = findViewById(R.id.searchView)
         rcvSearchResult = findViewById(R.id.rcvSearchResult)
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
+
+        // Cấu hình SearchView để gõ được tiếng Việt
+        val searchEditText = searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
+        searchEditText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
 
         // Nhận danh sách sách từ MainActivity (hoặc load lại từ nguồn dữ liệu)
         mangSachFull = intent.getSerializableExtra("mangSachFull") as? ArrayList<Sach> ?: ArrayList()
