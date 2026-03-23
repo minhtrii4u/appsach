@@ -9,11 +9,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import android.content.Intent
 import android.text.InputType
 import android.widget.EditText
+import java.io.Serializable
 
 class SearchActivity : AppCompatActivity() {
     private lateinit var searchView: SearchView
     private lateinit var rcvSearchResult: RecyclerView
-    private lateinit var adapterSach: SachAdapter
+    private var adapterSach: SachAdapter? = null
     private lateinit var bottomNavigationView: BottomNavigationView
     private var mangSach: ArrayList<Sach> = ArrayList()
     private var mangSachFull: ArrayList<Sach> = ArrayList()
@@ -30,9 +31,15 @@ class SearchActivity : AppCompatActivity() {
         val searchEditText = searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
         searchEditText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
 
-        // Nhận danh sách sách từ MainActivity (hoặc load lại từ nguồn dữ liệu)
-        mangSachFull = intent.getSerializableExtra("mangSachFull") as? ArrayList<Sach> ?: ArrayList()
+        // Nhận danh sách sách từ MainActivity an toàn hơn
+        val data = intent.getSerializableExtra("mangSachFull")
+        if (data is ArrayList<*>) {
+            mangSachFull = data.filterIsInstance<Sach>() as ArrayList<Sach>
+        }
+        
         val tenUser = intent.getStringExtra("gui_ten_user")
+        
+        mangSach.clear()
         mangSach.addAll(mangSachFull)
 
         adapterSach = SachAdapter(mangSach)
@@ -62,10 +69,7 @@ class SearchActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_search -> true
-                R.id.nav_library -> {
-                    // TODO: Chuyển sang activity tủ sách
-                    true
-                }
+                R.id.nav_library -> true
                 R.id.nav_profile -> {
                   val intent = Intent(this, ProfileActivity::class.java)
                     intent.putExtra("gui_ten_user", tenUser)
@@ -90,6 +94,6 @@ class SearchActivity : AppCompatActivity() {
                 it.theLoai.lowercase().contains(lower)
             })
         }
-        adapterSach.notifyDataSetChanged()
+        adapterSach?.notifyDataSetChanged()
     }
 }
