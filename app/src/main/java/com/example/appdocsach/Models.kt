@@ -1,5 +1,6 @@
 package com.example.appdocsach
 
+
 data class Account(
     val email: String = "",
     val password: String = "",
@@ -11,7 +12,8 @@ data class Book(
     val tacGia: String = "",
     val moTa: String = "",
     val theLoai: String = "",
-    val imageUrl: String = ""
+    val imageUrl: String = "",
+    val danhSachAudio: ArrayList<Int> = ArrayList()
 )
 
 data class Favorite(

@@ -8,6 +8,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
+// Buổi ..
+
 class MainActivity : AppCompatActivity() {
 
     lateinit var rcvSach: RecyclerView
@@ -15,7 +17,6 @@ class MainActivity : AppCompatActivity() {
     var mangSach: ArrayList<Sach> = ArrayList()
     var mangSachFull: ArrayList<Sach> = ArrayList()
 
-    // Category buttons
     lateinit var btnTatCa: TextView
     lateinit var btnVanHoc: TextView
     lateinit var btnKyNang: TextView
@@ -49,7 +50,6 @@ class MainActivity : AppCompatActivity() {
             tvXinChao.text = "Xin chào, $tenUser "
         }
 
-        // Initialize buttons
         btnTatCa = findViewById(R.id.btnTatCa)
         btnVanHoc = findViewById(R.id.btnVanHoc)
         btnKyNang = findViewById(R.id.btnKyNang)
@@ -70,7 +70,6 @@ class MainActivity : AppCompatActivity() {
         btnTonGiaoTamLinh = findViewById(R.id.btnTonGiaoTamLinh)
         btnNgoaiNgu = findViewById(R.id.btnNgoaiNgu)
 
-        // Set click listeners
         btnTatCa.setOnClickListener { selectCategory(btnTatCa, "Tất cả") }
         btnVanHoc.setOnClickListener { selectCategory(btnVanHoc, "Văn học") }
         btnKyNang.setOnClickListener { selectCategory(btnKyNang, "Kỹ năng") }
@@ -93,36 +92,65 @@ class MainActivity : AppCompatActivity() {
 
         rcvSach = findViewById(R.id.rcvDanhSach)
 
-        // Add books with categories
+        val audioOngGia = arrayListOf(
+            R.raw.ong_gia_va_bien_ca_1,
+            R.raw.ong_gia_va_bien_ca_2,
+            R.raw.ong_gia_va_bien_ca_3,
+            R.raw.ong_gia_va_bien_ca_4
+        )
+
+        val audioDeMen = arrayListOf(
+            R.raw.de_men_1,
+            R.raw.de_men_2,
+            R.raw.de_men_3,
+            R.raw.de_men_4
+        )
+
+        val audioSocSoSet = arrayListOf(
+            R.raw.soc_so_set_1,
+            R.raw.soc_so_set_2,
+            R.raw.soc_so_set_3
+        )
+
+        val audioNoiNaoCoMe = arrayListOf(
+            R.raw.noi_nao_co_me_1,
+            R.raw.noi_nao_co_me_2
+        )
+
+        val audioTatDen = arrayListOf(
+            R.raw.tat_den_1,
+            R.raw.tat_den_2,
+            R.raw.tat_den_3,
+            R.raw.tat_den_4,
+            R.raw.tat_den_5
+        )
+
         mangSachFull.add(Sach("Ông già và biển cả", "Ernest Hemingway", R.drawable.sach1,
-            "Câu chuyện kể về cuộc chiến đấu không cân sức giữa ông già Santiago và con cá kiếm khổng lồ...", "Văn học"))
+            "Câu chuyện kể về cuộc chiến đấu không cân sức giữa ông già Santiago và con cá kiếm khổng lồ...", "Văn học", audioOngGia))
 
         mangSachFull.add(Sach("Dế mèn phiêu lưu ký", "Tô Hoài", R.drawable.sach2,
-            "Tác phẩm kể về cuộc phiêu lưu của chú Dế Mèn qua nhiều vùng đất, học được nhiều bài học đường đời...", "Thiếu nhi"))
+            "Tác phẩm kể về cuộc phiêu lưu của chú Dế Mèn qua nhiều vùng đất, học được nhiều bài học đường đời...", "Thiếu nhi", audioDeMen))
 
         mangSachFull.add(Sach("Yêu trên từng ngón tay", "Trần Trà My", R.drawable.sach3,
             "Những câu chuyện nhẹ nhàng về tình yêu, cuộc sống của một cô gái trẻ đầy nghị lực...", "Tâm lý học"))
 
         mangSachFull.add(Sach("Sóc sợ sệt", "Milano Walt", R.drawable.sach4,
-            "Chú sóc nhỏ luôn lo lắng về mọi thứ xung quanh, nhưng rồi cậu học được cách dũng cảm đối mặt...", "Thiếu nhi"))
+            "Chú sóc nhỏ luôn lo lắng về mọi thứ xung quanh, nhưng rồi cậu học được cách dũng cảm đối mặt...", "Thiếu nhi", audioSocSoSet))
 
         mangSachFull.add(Sach("Nơi nào có mẹ là nhà", "Hạ Mer", R.drawable.sach5,
-            "Tuyển tập tản văn xúc động về tình mẫu tử, về những bữa cơm nhà và sự bình yên bên mẹ...", "Tâm lý học"))
+            "Tuyển tập tản văn xúc động về tình mẫu tử, về những bữa cơm nhà và sự bình yên bên mẹ...", "Tâm lý học", audioNoiNaoCoMe))
 
         mangSachFull.add(Sach("Tắt đèn", "Ngô Tất Tố", R.drawable.sach6,
-            "Bức tranh hiện thực về cuộc sống khốn cùng của người nông dân Việt Nam dưới chế độ thực dân phong kiến...", "Văn học"))
+            "Bức tranh hiện thực về cuộc sống khốn cùng của người nông dân Việt Nam dưới chế độ thực dân phong kiến...", "Văn học", audioTatDen))
 
-        // Initially show all
         mangSach.addAll(mangSachFull)
 
         adapterSach = SachAdapter(mangSach)
         rcvSach.adapter = adapterSach
         rcvSach.layoutManager = GridLayoutManager(this, 2)
 
-        // Select "Tất cả" by default
         selectCategory(btnTatCa, "Tất cả")
 
-        // Initialize Firebase and add sample data if needed
         val firebaseHelper = FirebaseHelper()
         firebaseHelper.addSampleData()
 
@@ -139,7 +167,6 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_library -> {
-                    // TODO: Chuyển sang activity tủ sách
                     true
                 }
                 R.id.nav_profile -> {
@@ -155,14 +182,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun selectCategory(button: TextView, category: String) {
-        // Reset previous selected button
         selectedButton?.apply {
             setBackgroundResource(R.drawable.bg_category_unselected)
             setTextColor(ContextCompat.getColor(this@MainActivity, R.color.category_text_unselected))
             setTypeface(null, android.graphics.Typeface.NORMAL)
         }
 
-        // Set new selected button
         button.apply {
             setBackgroundResource(R.drawable.bg_category_selected)
             setTextColor(ContextCompat.getColor(this@MainActivity, android.R.color.white))
@@ -171,7 +196,6 @@ class MainActivity : AppCompatActivity() {
 
         selectedButton = button
 
-        // Filter books
         mangSach.clear()
         if (category == "Tất cả") {
             mangSach.addAll(mangSachFull)

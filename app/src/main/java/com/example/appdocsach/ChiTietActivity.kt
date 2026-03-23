@@ -70,7 +70,6 @@ class ChiTietActivity : AppCompatActivity() {
                         }
                     }
                 } else {
-                    // Nếu không có URL, dùng file tạm trong raw để demo (nếu có)
                     mediaPlayer = MediaPlayer.create(this, R.raw.ong_gia_va_bien_ca_1)?.apply {
                         start()
                         this@ChiTietActivity.isPlaying = true

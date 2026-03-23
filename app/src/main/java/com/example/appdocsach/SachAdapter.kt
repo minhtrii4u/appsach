@@ -8,6 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
+// Buổi ..
+
 class SachAdapter(var dsSach: ArrayList<Sach>) : RecyclerView.Adapter<SachAdapter.SachViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SachViewHolder {
@@ -21,14 +23,12 @@ class SachAdapter(var dsSach: ArrayList<Sach>) : RecyclerView.Adapter<SachAdapte
 
         val sachHienTai = dsSach[position]
 
-
         holder.txtTen.text = sachHienTai.tenSach
         holder.txtTacGia.text = sachHienTai.tacGia
         holder.imgHinh.setImageResource(sachHienTai.hinhAnh)
 
         holder.itemView.setOnClickListener {
             val context = holder.itemView.context
-
 
             val intent = Intent(context, ChiTietActivity::class.java)
 
@@ -37,6 +37,7 @@ class SachAdapter(var dsSach: ArrayList<Sach>) : RecyclerView.Adapter<SachAdapte
             intent.putExtra("gui_hinh", sachHienTai.hinhAnh)
             intent.putExtra("gui_tomtat", sachHienTai.tomTat)
 
+            intent.putIntegerArrayListExtra("gui_danh_sach_audio", sachHienTai.danhSachAudio)
 
             context.startActivity(intent)
         }
