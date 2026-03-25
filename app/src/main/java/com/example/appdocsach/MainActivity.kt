@@ -39,6 +39,8 @@ class MainActivity : AppCompatActivity() {
 
     var selectedButton: TextView? = null
 
+    private val dsSachYeuThich: MutableList<Sach> = mutableListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -167,6 +169,8 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_library -> {
+                    val intent = Intent(this, FavoriteBooksActivity::class.java)
+                    startActivity(intent)
                     true
                 }
                 R.id.nav_profile -> {

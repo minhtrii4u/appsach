@@ -36,7 +36,9 @@ class ProfileActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_library -> {
-                    // TODO: Chuyển sang activity tủ sách
+                    val intent = Intent(this, FavoriteBooksActivity::class.java)
+                    // Nếu muốn truyền danh sách yêu thích, cần lấy từ MainActivity hoặc lưu qua SharedPreferences/Database
+                    startActivity(intent)
                     true
                 }
                 R.id.nav_profile -> true

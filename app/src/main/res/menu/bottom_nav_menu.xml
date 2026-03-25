@@ -10,7 +10,7 @@
         android:title="Tìm kiếm" />
     <item
         android:id="@+id/nav_library"
-        android:icon="@drawable/ic_library"
+        android:icon="@drawable/ic_heart"
         android:title="Tủ sách" />
     <item
         android:id="@+id/nav_profile"

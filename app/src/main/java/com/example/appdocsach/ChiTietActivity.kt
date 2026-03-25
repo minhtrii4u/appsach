@@ -28,13 +28,13 @@ class ChiTietActivity : AppCompatActivity() {
         val btnBack: LinearLayout = findViewById(R.id.btnBack)
         val btnDocSach: MaterialButton = findViewById(R.id.btnDocSach)
         val btnNgheAudio: MaterialButton = findViewById(R.id.btnNgheAudio)
-
+        val btnYeuThich: MaterialButton = findViewById(R.id.btnYeuThich)
 
         val ten = intent.getStringExtra("gui_ten") ?: "Tên Sách"
         val tacGia = intent.getStringExtra("gui_tacgia") ?: "Tác giả"
         val hinh = intent.getIntExtra("gui_hinh", R.drawable.sach1)
         val tomTat = intent.getStringExtra("gui_tomtat") ?: "Nội dung tóm tắt sẽ hiện ở đây..."
-        val audioUrl = intent.getStringExtra("gui_audio_url") ?: ""
+        val danhSachAudio = intent.getIntegerArrayListExtra("gui_danh_sach_audio") ?: arrayListOf()
 
         tvTen.text = ten
         tvTacGia.text = tacGia
@@ -46,7 +46,7 @@ class ChiTietActivity : AppCompatActivity() {
         }
 
         btnNgheAudio.setOnClickListener {
-            handleAudio(audioUrl, btnNgheAudio)
+            handleAudio(danhSachAudio, btnNgheAudio)
         }
 
         btnDocSach.setOnClickListener {
@@ -54,27 +54,38 @@ class ChiTietActivity : AppCompatActivity() {
             intent.putExtra("gui_ten_truyen", ten)
             startActivity(intent)
         }
+
+        btnYeuThich.setOnClickListener {
+            // Lưu sách yêu thích vào SharedPreferences
+            val sharedPreferences = getSharedPreferences("favorites", MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            
+            // Lấy danh sách yêu thích hiện tại
+            val favoritesSet = sharedPreferences.getStringSet("favorite_books", mutableSetOf())?.toMutableSet() ?: mutableSetOf()
+            
+            // Thêm sách hiện tại vào danh sách
+            favoritesSet.add(ten)
+            
+            // Lưu lại
+            editor.putStringSet("favorite_books", favoritesSet)
+            editor.apply()
+            
+            Toast.makeText(this, "Đã thêm \"$ten\" vào sách yêu thích", Toast.LENGTH_SHORT).show()
+        }
     }
 
-    private fun handleAudio(url: String, button: MaterialButton) {
+    private fun handleAudio(danhSachAudio: ArrayList<Int>, button: MaterialButton) {
         try {
             if (mediaPlayer == null) {
-                if (url.isNotEmpty()) {
-                    mediaPlayer = MediaPlayer().apply {
-                        setDataSource(url)
-                        prepareAsync()
-                        setOnPreparedListener {
-                            it.start()
-                            this@ChiTietActivity.isPlaying = true
-                            button.text = "Tạm dừng"
-                        }
-                    }
-                } else {
-                    mediaPlayer = MediaPlayer.create(this, R.raw.ong_gia_va_bien_ca_1)?.apply {
+                if (danhSachAudio.isNotEmpty()) {
+                    // Phát audio đầu tiên từ danh sách
+                    mediaPlayer = MediaPlayer.create(this, danhSachAudio[0])?.apply {
                         start()
                         this@ChiTietActivity.isPlaying = true
                         button.text = "Tạm dừng"
                     }
+                } else {
+                    Toast.makeText(this, "Không có audio cho sách này", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 if (isPlaying) {

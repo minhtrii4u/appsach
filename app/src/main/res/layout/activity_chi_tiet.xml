@@ -229,17 +229,18 @@
                     app:iconTint="@color/white" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnYeuThich"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:backgroundTint="#262626"
-                    android:text="Lưu vào tủ sách"
+                    android:text="Yêu thích"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     app:cornerRadius="12dp"
-                    app:icon="@android:drawable/btn_star_big_on"
+                    app:icon="@drawable/ic_heart"
                     app:iconPadding="8dp"
-                    app:iconTint="#FFC107" />
+                    app:iconTint="#FF1744" />
             </LinearLayout>
 
             <TextView
