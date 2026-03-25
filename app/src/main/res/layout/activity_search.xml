@@ -50,10 +50,11 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:background="@android:color/white"
-        app:elevation="8dp"
-        app:labelVisibilityMode="unlabeled"
-        app:menu="@menu/bottom_nav_menu" />
-
+        app:menu="@menu/bottom_nav_menu"
+        app:itemIconTint="@color/bottom_nav_icon_color_selector"
+        app:itemTextColor="@color/bottom_nav_text_color_selector"
+        app:labelVisibilityMode="unlabeled" />
 </LinearLayout>
