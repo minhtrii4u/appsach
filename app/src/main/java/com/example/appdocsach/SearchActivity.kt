@@ -69,7 +69,13 @@ class SearchActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_search -> true
-                R.id.nav_library -> true
+                R.id.nav_library -> {
+                    val intent = Intent(this, FavoriteBooksActivity::class.java)
+                    intent.putExtra("gui_ten_user", tenUser)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
+                    true
+                }
                 R.id.nav_profile -> {
                   val intent = Intent(this, ProfileActivity::class.java)
                     intent.putExtra("gui_ten_user", tenUser)
