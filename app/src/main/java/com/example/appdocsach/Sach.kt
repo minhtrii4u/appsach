@@ -2,15 +2,14 @@ package com.example.appdocsach
 
 import java.io.Serializable
 
-
-
 class Sach : Serializable {
     var tenSach: String = ""
     var tacGia: String = ""
     var hinhAnh: Int = 0
     var tomTat: String = ""
     var theLoai: String = ""
-
+    var gioiThieuTacGia: String = ""
+    var cacPhan: ArrayList<PhanSach> = ArrayList()
     var danhSachAudio: ArrayList<Int> = ArrayList()
 
     constructor(ten: String, tg: String, hinh: Int, tt: String, tl: String, audio: ArrayList<Int> = ArrayList()) {
@@ -20,5 +19,15 @@ class Sach : Serializable {
         this.tomTat = tt
         this.theLoai = tl
         this.danhSachAudio = audio
+    }
+}
+
+class PhanSach : Serializable {
+    var tieuDe: String = ""
+    var noiDung: String = ""
+    
+    constructor(tieuDe: String, noiDung: String) {
+        this.tieuDe = tieuDe
+        this.noiDung = noiDung
     }
 }

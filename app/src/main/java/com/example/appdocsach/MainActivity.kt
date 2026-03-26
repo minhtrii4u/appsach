@@ -8,14 +8,11 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-// Buổi ..
-
 class MainActivity : AppCompatActivity() {
 
     lateinit var rcvSach: RecyclerView
     lateinit var adapterSach: SachAdapter
     var mangSach: ArrayList<Sach> = ArrayList()
-    var mangSachFull: ArrayList<Sach> = ArrayList()
 
     lateinit var btnTatCa: TextView
     lateinit var btnVanHoc: TextView
@@ -39,17 +36,23 @@ class MainActivity : AppCompatActivity() {
 
     var selectedButton: TextView? = null
 
-    private val dsSachYeuThich: MutableList<Sach> = mutableListOf()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        BookManager.loadBooks(this)
 
         val tvXinChao: TextView = findViewById(R.id.tvXinChao)
         val tenUser = intent.getStringExtra("gui_ten_user")
 
         if (tenUser != null && tenUser.isNotEmpty()) {
             tvXinChao.text = "Xin chào, $tenUser "
+        } else {
+            // Lấy từ bộ nhớ nếu intent bị mất
+            val pref = getSharedPreferences("DuLieuTaiKhoan", MODE_PRIVATE)
+            val emailLuu = pref.getString("saved_email", "Khách")
+            val ten = emailLuu?.substringBefore("@") ?: "Khách"
+            tvXinChao.text = "Xin chào, $ten"
         }
 
         btnTatCa = findViewById(R.id.btnTatCa)
@@ -93,59 +96,7 @@ class MainActivity : AppCompatActivity() {
         btnNgoaiNgu.setOnClickListener { selectCategory(btnNgoaiNgu, "Ngoại ngữ") }
 
         rcvSach = findViewById(R.id.rcvDanhSach)
-
-        val audioOngGia = arrayListOf(
-            R.raw.ong_gia_va_bien_ca_1,
-            R.raw.ong_gia_va_bien_ca_2,
-            R.raw.ong_gia_va_bien_ca_3,
-            R.raw.ong_gia_va_bien_ca_4
-        )
-
-        val audioDeMen = arrayListOf(
-            R.raw.de_men_1,
-            R.raw.de_men_2,
-            R.raw.de_men_3,
-            R.raw.de_men_4
-        )
-
-        val audioSocSoSet = arrayListOf(
-            R.raw.soc_so_set_1,
-            R.raw.soc_so_set_2,
-            R.raw.soc_so_set_3
-        )
-
-        val audioNoiNaoCoMe = arrayListOf(
-            R.raw.noi_nao_co_me_1,
-            R.raw.noi_nao_co_me_2
-        )
-
-        val audioTatDen = arrayListOf(
-            R.raw.tat_den_1,
-            R.raw.tat_den_2,
-            R.raw.tat_den_3,
-            R.raw.tat_den_4,
-            R.raw.tat_den_5
-        )
-
-        mangSachFull.add(Sach("Ông già và biển cả", "Ernest Hemingway", R.drawable.sach1,
-            "Câu chuyện kể về cuộc chiến đấu không cân sức giữa ông già Santiago và con cá kiếm khổng lồ...", "Văn học", audioOngGia))
-
-        mangSachFull.add(Sach("Dế mèn phiêu lưu ký", "Tô Hoài", R.drawable.sach2,
-            "Tác phẩm kể về cuộc phiêu lưu của chú Dế Mèn qua nhiều vùng đất, học được nhiều bài học đường đời...", "Thiếu nhi", audioDeMen))
-
-        mangSachFull.add(Sach("Yêu trên từng ngón tay", "Trần Trà My", R.drawable.sach3,
-            "Những câu chuyện nhẹ nhàng về tình yêu, cuộc sống của một cô gái trẻ đầy nghị lực...", "Tâm lý học"))
-
-        mangSachFull.add(Sach("Sóc sợ sệt", "Milano Walt", R.drawable.sach4,
-            "Chú sóc nhỏ luôn lo lắng về mọi thứ xung quanh, nhưng rồi cậu học được cách dũng cảm đối mặt...", "Thiếu nhi", audioSocSoSet))
-
-        mangSachFull.add(Sach("Nơi nào có mẹ là nhà", "Hạ Mer", R.drawable.sach5,
-            "Tuyển tập tản văn xúc động về tình mẫu tử, về những bữa cơm nhà và sự bình yên bên mẹ...", "Tâm lý học", audioNoiNaoCoMe))
-
-        mangSachFull.add(Sach("Tắt đèn", "Ngô Tất Tố", R.drawable.sach6,
-            "Bức tranh hiện thực về cuộc sống khốn cùng của người nông dân Việt Nam dưới chế độ thực dân phong kiến...", "Văn học", audioTatDen))
-
-        mangSach.addAll(mangSachFull)
+        mangSach.addAll(BookManager.mangSachFull)
 
         adapterSach = SachAdapter(mangSach)
         rcvSach.adapter = adapterSach
@@ -153,36 +104,40 @@ class MainActivity : AppCompatActivity() {
 
         selectCategory(btnTatCa, "Tất cả")
 
-        val firebaseHelper = FirebaseHelper()
-        firebaseHelper.addSampleData()
-
         val bottomNavigationView = findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView.selectedItemId = R.id.nav_home
         bottomNavigationView.setOnItemSelectedListener { item ->
+            val currentTenUser = intent.getStringExtra("gui_ten_user") ?: getSharedPreferences("DuLieuTaiKhoan", MODE_PRIVATE).getString("saved_email", "Khách")?.substringBefore("@")
             when (item.itemId) {
                 R.id.nav_home -> true
                 R.id.nav_search -> {
                     val intent = Intent(this, SearchActivity::class.java)
-                    intent.putExtra("mangSachFull", mangSachFull)
-                    intent.putExtra("gui_ten_user", tenUser)
+                    intent.putExtra("mangSachFull", BookManager.mangSachFull)
+                    intent.putExtra("gui_ten_user", currentTenUser)
                     startActivity(intent)
                     true
                 }
                 R.id.nav_library -> {
                     val intent = Intent(this, FavoriteBooksActivity::class.java)
+                    intent.putExtra("gui_ten_user", currentTenUser)
                     startActivity(intent)
                     true
                 }
                 R.id.nav_profile -> {
                     val intent = Intent(this, ProfileActivity::class.java)
-                    intent.putExtra("gui_ten_user", tenUser)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    intent.putExtra("gui_ten_user", currentTenUser)
                     startActivity(intent)
                     true
                 }
                 else -> false
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        BookManager.loadBooks(this)
+        selectCategory(selectedButton ?: btnTatCa, (selectedButton?.text ?: "Tất cả").toString())
     }
 
     private fun selectCategory(button: TextView, category: String) {
@@ -202,11 +157,13 @@ class MainActivity : AppCompatActivity() {
 
         mangSach.clear()
         if (category == "Tất cả") {
-            mangSach.addAll(mangSachFull)
+            mangSach.addAll(BookManager.mangSachFull)
         } else {
-            mangSach.addAll(mangSachFull.filter { it.theLoai == category })
+            mangSach.addAll(BookManager.mangSachFull.filter { it.theLoai == category })
         }
 
-        adapterSach.notifyDataSetChanged()
+        if (::adapterSach.isInitialized) {
+            adapterSach.notifyDataSetChanged()
+        }
     }
 }

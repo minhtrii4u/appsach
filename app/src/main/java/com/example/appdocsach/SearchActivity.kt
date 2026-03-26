@@ -60,10 +60,11 @@ class SearchActivity : AppCompatActivity() {
         // Bottom navigation
         bottomNavigationView.selectedItemId = R.id.nav_search
         bottomNavigationView.setOnItemSelectedListener { item ->
+            val currentTenUser = intent.getStringExtra("gui_ten_user") ?: getSharedPreferences("DuLieuTaiKhoan", MODE_PRIVATE).getString("saved_email", "Khách")?.substringBefore("@")
             when (item.itemId) {
                 R.id.nav_home -> {
                     val intent = Intent(this, MainActivity::class.java)
-                    intent.putExtra("gui_ten_user", tenUser)
+                    intent.putExtra("gui_ten_user", currentTenUser)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
                     true
@@ -71,14 +72,14 @@ class SearchActivity : AppCompatActivity() {
                 R.id.nav_search -> true
                 R.id.nav_library -> {
                     val intent = Intent(this, FavoriteBooksActivity::class.java)
-                    intent.putExtra("gui_ten_user", tenUser)
+                    intent.putExtra("gui_ten_user", currentTenUser)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
                     true
                 }
                 R.id.nav_profile -> {
                   val intent = Intent(this, ProfileActivity::class.java)
-                    intent.putExtra("gui_ten_user", tenUser)
+                    intent.putExtra("gui_ten_user", currentTenUser)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
                     true

@@ -41,6 +41,12 @@
         <activity
             android:name=".FavoriteBooksActivity"
             android:exported="true" />
+        <activity
+            android:name=".AdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditBookActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

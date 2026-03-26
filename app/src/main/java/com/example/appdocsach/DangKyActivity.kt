@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.FirebaseDatabase
 
 class DangKyActivity : AppCompatActivity() {
 
@@ -34,7 +35,6 @@ class DangKyActivity : AppCompatActivity() {
         btnTogglePassword = findViewById(R.id.btnTogglePasswordDK)
         btnToggleConfirmPassword = findViewById(R.id.btnToggleConfirmPasswordDK)
 
-        // Handle password visibility toggle for password field
         btnTogglePassword.setOnClickListener {
             isPasswordVisible = !isPasswordVisible
             if (isPasswordVisible) {
@@ -47,7 +47,6 @@ class DangKyActivity : AppCompatActivity() {
             edtPass.setSelection(edtPass.text.length)
         }
 
-        // Handle password visibility toggle for confirm password field
         btnToggleConfirmPassword.setOnClickListener {
             isConfirmPasswordVisible = !isConfirmPasswordVisible
             if (isConfirmPasswordVisible) {
@@ -65,25 +64,39 @@ class DangKyActivity : AppCompatActivity() {
         }
 
         btnDK.setOnClickListener {
-            val email = edtEmail.text.toString()
-            val pass = edtPass.text.toString()
-            val pass2 = edtPass2.text.toString()
+            val email = edtEmail.text.toString().trim()
+            val pass = edtPass.text.toString().trim()
+            val pass2 = edtPass2.text.toString().trim()
 
             if (email == "" || pass == "" || pass2 == "") {
                 Toast.makeText(this, "Nhập thiếu thông tin rồi!", Toast.LENGTH_SHORT).show()
             } else {
-
                 if (pass == pass2) {
-
-                    val pref = getSharedPreferences("TaiKhoanLuu", Context.MODE_PRIVATE)
+                    // 1. Lưu local để dùng ngay (Sync với DangNhapActivity)
+                    val pref = getSharedPreferences("DuLieuTaiKhoan", Context.MODE_PRIVATE)
                     val editor = pref.edit()
+                    editor.putString("saved_email", email)
+                    editor.putString("saved_pass", pass)
+                    editor.apply()
 
-                    editor.putString("email", email)
-                    editor.putString("pass", pass)
-                    editor.apply() // Lưu xuống
-
-                    Toast.makeText(this, "Đăng ký xong! Về đăng nhập nhé", Toast.LENGTH_SHORT).show()
-                    finish() // Đóng màn hình
+                    // 2. Lưu lên Firebase Database theo cấu trúc mới
+                    val database = FirebaseDatabase.getInstance("https://book-a8796-default-rtdb.asia-southeast1.firebasedatabase.app/").reference
+                    val userId = database.child("users").push().key ?: email.replace(".", "_")
+                    val newUser = User(
+                        id = userId,
+                        gmail = email,
+                        password = pass,
+                        name = email.substringBefore("@")
+                    )
+                    
+                    database.child("users").child(userId).setValue(newUser)
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show()
+                            finish()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this, "Lỗi kết nối server!", Toast.LENGTH_SHORT).show()
+                        }
                 } else {
                     Toast.makeText(this, "Mật khẩu nhập lại không khớp", Toast.LENGTH_SHORT).show()
                 }

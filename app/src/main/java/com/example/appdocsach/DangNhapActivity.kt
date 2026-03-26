@@ -62,18 +62,21 @@ class DangNhapActivity : AppCompatActivity() {
                 val emailLuu = boNho.getString("saved_email", "")
                 val passLuu = boNho.getString("saved_pass", "")
 
-                if ((emailNhap == emailLuu && passNhap == passLuu) ||
-                    (emailNhap == "MinhTri@gmail.com" && passNhap == "25082006") ||
+                // Kiểm tra tài khoản Admin
+                if ((emailNhap == "MinhTri@gmail.com" && passNhap == "25082006") ||
                     (emailNhap == "huy@gmail.com" && passNhap == "08112006")) {
-
+                    
+                    Toast.makeText(this, "Đăng nhập ADMIN thành công", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, AdminActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } 
+                // Kiểm tra tài khoản User thường
+                else if (emailNhap == emailLuu && passNhap == passLuu) {
                     Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
-
                     val intent = Intent(this, MainActivity::class.java)
-
                     val tenNguoiDung = emailNhap.substringBefore("@")
-
                     intent.putExtra("gui_ten_user", tenNguoiDung)
-
                     startActivity(intent)
                     finish()
                 } else {

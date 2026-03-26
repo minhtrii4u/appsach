@@ -199,7 +199,7 @@
                 android:layout_height="56dp"
                 android:layout_marginTop="24dp"
                 android:backgroundTint="#00C853"
-                android:text="Đọc tiếp 30%"
+                android:text="Đọc ngay"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="18sp"
@@ -262,99 +262,6 @@
                 android:textColor="#BBBBBB"
                 android:textSize="15sp" />
 
-            <GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:columnCount="2">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_columnWeight="1"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="SỐ TRANG"
-                        android:textColor="#666666"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="127 trang"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_columnWeight="1"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="NGÔN NGỮ"
-                        android:textColor="#666666"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="Tiếng Việt"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_columnWeight="1"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="NĂM XUẤT BẢN"
-                        android:textColor="#666666"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="1952"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_columnWeight="1"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="NHÀ XUẤT BẢN"
-                        android:textColor="#666666"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="NXB Văn Học"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </GridLayout>
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -367,77 +274,22 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
                 <TextView
+                    android:id="@+id/tvSoPhan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:text="Xem tất cả"
+                    android:text="0 chương"
                     android:textColor="#00C853"
                     android:textSize="14sp" />
             </RelativeLayout>
 
             <LinearLayout
+                android:id="@+id/layoutMụcLuc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical">
-                <!-- Sample Chapter 1 -->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="Chương 1: Bình minh trên biển"
-                        android:textColor="#BBBBBB" />
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_chevron_right"
-                        app:tint="#666666" />
-                </RelativeLayout>
-
-                <!-- Sample Chapter 2 - Active -->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="#262626"
-                    android:paddingHorizontal="8dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="Chương 2: Cuộc săn đuổi (Đang đọc)"
-                        android:textColor="#00C853" />
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_chevron_right"
-                        app:tint="#00C853" />
-                </RelativeLayout>
-
-                <!-- Sample Chapter 3 - Locked -->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="Chương 3: Trở về bến cảng"
-                        android:textColor="#666666" />
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:src="@android:drawable/ic_lock_idle_lock"
-                        app:tint="#444444" />
-                </RelativeLayout>
+                <!-- Danh sách chương sẽ được thêm vào đây bằng code -->
             </LinearLayout>
 
         </LinearLayout>
