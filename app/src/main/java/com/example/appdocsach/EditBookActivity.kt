@@ -67,32 +67,45 @@ class EditBookActivity : AppCompatActivity() {
         edtGioiThieuTacGia.setText(sach.gioiThieuTacGia)
         imgBook.setImageResource(sach.hinhAnh)
         
-        // Kiểm tra null trước khi duyệt danh sách các phần
-        if (sach.cacPhan == null) {
-            sach.cacPhan = ArrayList()
-        }
-        
-        sach.cacPhan.forEach { addSectionView(it.tieuDe, it.noiDung) }
+        // Duyệt danh sách các phần
+        sach.cacPhan.forEach { addSectionView(it.tieuDe, it.noiDung, it.audioResId) }
 
         if (sach.cacPhan.isEmpty()) {
-            addSectionView("", "")
+            addSectionView("", "", 0)
         }
     }
 
     private fun setupAddMode() {
         tvTopTitle.text = "Thêm sách mới"
         btnDelete.visibility = View.GONE
-        addSectionView("", "")
+        addSectionView("", "", 0)
     }
 
-    private fun addSectionView(tieuDe: String, noiDung: String) {
+    private fun addSectionView(tieuDe: String, noiDung: String, audioResId: Int) {
         val view = LayoutInflater.from(this).inflate(R.layout.item_edit_section, layoutSectionsContainer, false)
         val edtTieuDe = view.findViewById<EditText>(R.id.edtSectionTitle)
         val edtNoiDung = view.findViewById<EditText>(R.id.edtSectionContent)
         val btnRemove = view.findViewById<ImageButton>(R.id.btnRemoveSection)
+        val tvAudioName = view.findViewById<TextView>(R.id.tvAudioFileName)
+        val btnSelectAudio = view.findViewById<Button>(R.id.btnSelectAudio)
 
         edtTieuDe.setText(tieuDe)
         edtNoiDung.setText(noiDung)
+        
+        // Gán tag để lưu audioResId hiện tại của view này
+        view.tag = audioResId
+        if (audioResId != 0) {
+            tvAudioName.text = "Audio ID: $audioResId"
+        }
+
+        btnSelectAudio.setOnClickListener {
+            // Logic chọn tệp âm thanh - Tạm thời giả lập bằng cách gán một ID ngẫu nhiên hoặc mở dialog
+            // Ở đây tôi giả định bạn sẽ tích hợp trình chọn tệp thực tế sau
+            val randomAudioId = (100..999).random() // Giả lập chọn tệp
+            view.tag = randomAudioId
+            tvAudioName.text = "Đã chọn: audio_$randomAudioId.mp3"
+            Toast.makeText(this, "Đã chọn audio cho phần này", Toast.LENGTH_SHORT).show()
+        }
         
         btnRemove.setOnClickListener {
             layoutSectionsContainer.removeView(view)
@@ -104,7 +117,7 @@ class EditBookActivity : AppCompatActivity() {
     private fun setupListeners() {
         btnBack.setOnClickListener { finish() }
         btnCancel.setOnClickListener { finish() }
-        btnAddSection.setOnClickListener { addSectionView("", "") }
+        btnAddSection.setOnClickListener { addSectionView("", "", 0) }
 
         btnSave.setOnClickListener {
             saveBook()
@@ -130,12 +143,24 @@ class EditBookActivity : AppCompatActivity() {
         }
 
         val cacPhanMoi = ArrayList<PhanSach>()
+        val danhSachAudioMoi = ArrayList<Int>()
+
         for (i in 0 until layoutSectionsContainer.childCount) {
             val view = layoutSectionsContainer.getChildAt(i)
-            val tieuDe = view.findViewById<EditText>(R.id.edtSectionTitle).text.toString().trim()
-            val noiDung = view.findViewById<EditText>(R.id.edtSectionContent).text.toString().trim()
-            if (tieuDe.isNotEmpty() || noiDung.isNotEmpty()) {
-                cacPhanMoi.add(PhanSach(tieuDe, noiDung))
+            if (view != null) {
+                val edtTieuDe = view.findViewById<EditText>(R.id.edtSectionTitle)
+                val edtNoiDung = view.findViewById<EditText>(R.id.edtSectionContent)
+                val audioResId = view.tag as? Int ?: 0
+                
+                val tieuDe = edtTieuDe.text.toString().trim()
+                val noiDung = edtNoiDung.text.toString().trim()
+                
+                if (tieuDe.isNotEmpty() || noiDung.isNotEmpty()) {
+                    cacPhanMoi.add(PhanSach(tieuDe, noiDung, audioResId))
+                    if (audioResId != 0) {
+                        danhSachAudioMoi.add(audioResId)
+                    }
+                }
             }
         }
 
@@ -143,11 +168,21 @@ class EditBookActivity : AppCompatActivity() {
             val newBook = Sach(ten, tg, R.drawable.sach1, "", "Văn học")
             newBook.gioiThieuTacGia = gttg
             newBook.cacPhan = cacPhanMoi
+            newBook.danhSachAudio = danhSachAudioMoi
             BookManager.addBook(this, newBook)
             Toast.makeText(this, "Thêm sách thành công", Toast.LENGTH_SHORT).show()
         } else {
             currentSach?.let {
-                val updatedBook = Sach(ten, tg, it.hinhAnh, it.tomTat, it.theLoai, it.danhSachAudio)
+                val updatedBook = Sach(
+                    ten,
+                    tg,
+                    it.hinhAnh,
+                    it.tomTat,
+                    it.theLoai,
+                    it.diemDanhGia,
+                    it.luotDanhGia,
+                    danhSachAudioMoi
+                )
                 updatedBook.gioiThieuTacGia = gttg
                 updatedBook.cacPhan = cacPhanMoi
                 BookManager.updateBook(this, it.tenSach, updatedBook)

@@ -10,6 +10,10 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class DangNhapActivity : AppCompatActivity() {
 
@@ -30,19 +34,15 @@ class DangNhapActivity : AppCompatActivity() {
         tvChuyenDK = findViewById(R.id.tvChuyenDangKy)
         btnTogglePassword = findViewById(R.id.btnTogglePasswordDN)
 
-        // Handle password visibility toggle
         btnTogglePassword.setOnClickListener {
             isPasswordVisible = !isPasswordVisible
             if (isPasswordVisible) {
-                // Show password
                 edtPass.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
                 btnTogglePassword.setImageResource(R.drawable.ic_eye_show)
             } else {
-                // Hide password
                 edtPass.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
                 btnTogglePassword.setImageResource(R.drawable.ic_eye_hide)
             }
-            // Move cursor to end
             edtPass.setSelection(edtPass.text.length)
         }
 
@@ -58,11 +58,7 @@ class DangNhapActivity : AppCompatActivity() {
             if (emailNhap == "" || passNhap == "") {
                 Toast.makeText(this, "Nhập thiếu thông tin", Toast.LENGTH_SHORT).show()
             } else {
-                val boNho = getSharedPreferences("DuLieuTaiKhoan", Context.MODE_PRIVATE)
-                val emailLuu = boNho.getString("saved_email", "")
-                val passLuu = boNho.getString("saved_pass", "")
-
-                // Kiểm tra tài khoản Admin
+                // Kiểm tra tài khoản Admin cố định
                 if ((emailNhap == "MinhTri@gmail.com" && passNhap == "25082006") ||
                     (emailNhap == "huy@gmail.com" && passNhap == "08112006")) {
                     
@@ -70,18 +66,48 @@ class DangNhapActivity : AppCompatActivity() {
                     val intent = Intent(this, AdminActivity::class.java)
                     startActivity(intent)
                     finish()
-                } 
-                // Kiểm tra tài khoản User thường
-                else if (emailNhap == emailLuu && passNhap == passLuu) {
-                    Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, MainActivity::class.java)
-                    val tenNguoiDung = emailNhap.substringBefore("@")
-                    intent.putExtra("gui_ten_user", tenNguoiDung)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    Toast.makeText(this, "Sai tài khoản hoặc mật khẩu!", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
                 }
+
+                // Kiểm tra tài khoản trên Firebase Database
+                val database = FirebaseDatabase.getInstance("https://book-a8796-default-rtdb.asia-southeast1.firebasedatabase.app/").reference
+                database.child("users").orderByChild("gmail").equalTo(emailNhap)
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            if (snapshot.exists()) {
+                                var found = false
+                                for (userSnapshot in snapshot.children) {
+                                    val user = userSnapshot.getValue(User::class.java)
+                                    if (user != null && user.password == passNhap) {
+                                        found = true
+                                        // Lưu thông tin vào local SharedPreferences để đồng bộ các trang khác
+                                        val pref = getSharedPreferences("DuLieuTaiKhoan", Context.MODE_PRIVATE)
+                                        val editor = pref.edit()
+                                        editor.putString("user_id", user.id)
+                                        editor.putString("saved_email", user.gmail)
+                                        editor.putString("saved_pass", user.password)
+                                        editor.apply()
+
+                                        Toast.makeText(this@DangNhapActivity, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
+                                        val intent = Intent(this@DangNhapActivity, MainActivity::class.java)
+                                        intent.putExtra("gui_ten_user", user.name)
+                                        startActivity(intent)
+                                        finish()
+                                        break
+                                    }
+                                }
+                                if (!found) {
+                                    Toast.makeText(this@DangNhapActivity, "Sai mật khẩu!", Toast.LENGTH_SHORT).show()
+                                }
+                            } else {
+                                Toast.makeText(this@DangNhapActivity, "Tài khoản không tồn tại!", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            Toast.makeText(this@DangNhapActivity, "Lỗi kết nối: ${error.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    })
             }
         }
     }

@@ -8,8 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-// Buổi ..
-
 class SachAdapter(var dsSach: ArrayList<Sach>) : RecyclerView.Adapter<SachAdapter.SachViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SachViewHolder {
@@ -36,6 +34,7 @@ class SachAdapter(var dsSach: ArrayList<Sach>) : RecyclerView.Adapter<SachAdapte
             intent.putExtra("gui_tacgia", sachHienTai.tacGia)
             intent.putExtra("gui_hinh", sachHienTai.hinhAnh)
             intent.putExtra("gui_tomtat", sachHienTai.tomTat)
+            intent.putExtra("gui_theloai", sachHienTai.theLoai)
 
             intent.putIntegerArrayListExtra("gui_danh_sach_audio", sachHienTai.danhSachAudio)
 

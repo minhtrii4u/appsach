@@ -77,52 +77,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Audio Sách Nói"
-            android:textColor="#4E342E"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_input"
-            android:padding="12dp"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="24dp">
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/bg_profile_avatar"
-                android:padding="8dp" />
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_marginStart="12dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tải lên tệp âm thanh"
-                    android:textColor="#3E2723"
-                    android:textStyle="bold"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Hỗ trợ mp3, wav"
-                    android:textColor="#8D6E63"
-                    android:textSize="12sp"/>
-            </LinearLayout>
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@android:drawable/ic_input_add"
-                app:tint="#8D6E63" />
-        </LinearLayout>
-
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

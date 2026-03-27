@@ -160,20 +160,27 @@ class FavoriteBooksActivity : AppCompatActivity() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView.selectedItemId = R.id.nav_library
         bottomNavigationView.setOnItemSelectedListener { item ->
+            val tenUser = intent.getStringExtra("gui_ten_user")
             when (item.itemId) {
                 R.id.nav_home -> {
-                    startActivity(Intent(this, MainActivity::class.java))
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("gui_ten_user", tenUser)
+                    startActivity(intent)
                     finish()
                     true
                 }
                 R.id.nav_search -> {
-                    startActivity(Intent(this, SearchActivity::class.java))
+                    val intent = Intent(this, SearchActivity::class.java)
+                    intent.putExtra("gui_ten_user", tenUser)
+                    startActivity(intent)
                     finish()
                     true
                 }
                 R.id.nav_library -> true
                 R.id.nav_profile -> {
-                    startActivity(Intent(this, ProfileActivity::class.java))
+                    val intent = Intent(this, ProfileActivity::class.java)
+                    intent.putExtra("gui_ten_user", tenUser)
+                    startActivity(intent)
                     finish()
                     true
                 }

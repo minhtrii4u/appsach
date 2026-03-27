@@ -16,6 +16,10 @@ data class User(
     val gmail: String = "",
     val password: String = "",
     val name: String = "",
+    val totalBooksRead: Int = 0,
+    val totalReadingTime: Int = 0,
+    val favoriteCount: Int = 0,
+    val interactions: Int = 0,
     val createdAt: Long = System.currentTimeMillis()
 ) : Serializable
 
@@ -37,6 +41,8 @@ data class Book(
     val audio: String = "",
     val description: String = "",
     val category: String = "", // Added category for filtering
+    val ratingScore: Double = 0.0,
+    val ratingCount: Int = 0,
     val createdAt: Long = System.currentTimeMillis()
 ) : Serializable
 

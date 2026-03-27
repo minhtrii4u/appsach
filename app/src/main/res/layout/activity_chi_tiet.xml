@@ -107,9 +107,10 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:clipChildren="false">
 
                     <TextView
                         android:id="@+id/tvTenChiTiet"
@@ -138,24 +139,13 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tvTheLoaiChiTiet"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bg_category_selected"
-                            android:paddingHorizontal="12dp"
-                            android:paddingVertical="4dp"
-                            android:text="Hội viên"
-                            android:textColor="@color/white"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
                             android:background="#262626"
                             android:paddingHorizontal="12dp"
                             android:paddingVertical="4dp"
-                            android:text="Kinh điển"
+                            android:text="Thể loại"
                             android:textColor="#BBBBBB"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -168,27 +158,67 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tvDiemRating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="4.8"
                             android:textColor="@color/white"
-                            android:textSize="14sp"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <ImageView
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
                             android:layout_marginStart="4dp"
                             android:src="@android:drawable/btn_star_big_on"
                             app:tint="#FFC107" />
 
                         <TextView
+                            android:id="@+id/tvLuotRating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="(1.2k lượt đánh giá)"
                             android:textColor="#888888"
                             android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="vertical"
+                        android:clipChildren="false"
+                        android:clipToPadding="false">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Đánh giá của bạn:"
+                            android:textColor="#BBBBBB"
+                            android:textSize="13sp" />
+
+                        <!-- FrameLayout rộng hơn để RatingBar không bị clip trước khi scale -->
+                        <FrameLayout
+                            android:layout_width="280dp"
+                            android:layout_height="wrap_content"
+                            android:clipChildren="false"
+                            android:clipToPadding="false">
+                            <RatingBar
+                                android:id="@+id/ratingBarUser"
+                                style="@style/Widget.AppCompat.RatingBar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:isIndicator="false"
+                                android:numStars="5"
+                                android:progressBackgroundTint="#444444"
+                                android:progressTint="#FFC107"
+                                android:secondaryProgressTint="#444444"
+                                android:stepSize="1.0"
+                                android:scaleX="0.4"
+                                android:scaleY="0.4"
+                                android:transformPivotX="0dp"
+                                android:transformPivotY="0dp" />
+                        </FrameLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -240,7 +270,7 @@
                     app:cornerRadius="12dp"
                     app:icon="@drawable/ic_heart"
                     app:iconPadding="8dp"
-                    app:iconTint="#FF1744" />
+                    app:iconTint="#888888" />
             </LinearLayout>
 
             <TextView
@@ -278,7 +308,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:text="0 chương"
+                    android:text="0 phần"
                     android:textColor="#00C853"
                     android:textSize="14sp" />
             </RelativeLayout>
